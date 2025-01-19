@@ -1,0 +1,6 @@
+# SSH
+github
+*.pub
+
+# IDEs and editors
+.vscode/
