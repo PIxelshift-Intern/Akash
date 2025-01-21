@@ -1,8 +1,8 @@
 # Akash
 
-All my learning will be based from <a src="https://docs.python.org/3.12/tutorial/index.html">docs<a>
-and I will be using the python 3.12.3 version for all my learning (will update/downgrade if necessary as per the requirement)
-Will be following the PEP 8 style guide for the code <a src="https://peps.python.org/pep-0008/">Style guide</a> 
+All my learning will be based from <a href="https://docs.python.org/3.12/tutorial/index.html">docs<a><br>
+and I will be using the python 3.12.3 version for all my learning (will update/downgrade if necessary as per the requirement)<br>
+Will be following the PEP 8 style guide for the code <a href="https://peps.python.org/pep-0008/">Style guide</a> 
 
 this is a repo for learning the basics as well as backend related stuff for python and also few frameworks if possible 
 
