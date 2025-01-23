@@ -33,3 +33,10 @@ Other than these we will also learn about the following
 8) GraphQL
 
 
+## Note
+"# %%" this is a vscode extension for running jupyter notebook cell block for a defined block 
+1) Open VsCode
+2) go to extensions
+3) install Jupyter cell and support by microsoft
+4) use the tag for creating a cell block for jupyter notebook
+
