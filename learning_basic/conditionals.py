@@ -3,6 +3,7 @@
 
 a= 5
 b = 2
+c = 4
 # %% Conditional Statements
 def conditional_examples():
    # Simple if statement
