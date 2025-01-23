@@ -1,12 +1,12 @@
-#%%
+# import libraries
+# import `file_name`(must be in the same directory)
+# import `module_name`(must be in the same directory)
+# import `module_name` as `alias`
+# from `module_name` import `function_name`
+# from `module_name` import `function_name` as `alias`
+# from `module_name` import *
+# import `main_module`.`sub_module`.`module_name` (nested module {we need to specify the path})
 
-# OOPs
-# list of OOPs concepts
-# 1. Class & Object
-# 2. Inheritance
-# 3. Polymorphism
-# 4. Encapsulation
-# 5. Abstraction
 
 # %% OOP Concepts
 
