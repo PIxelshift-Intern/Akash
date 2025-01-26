@@ -1,0 +1,11 @@
+[
+    {
+        "item_id": 2,
+        "user_id": "ak",
+        "message": "New item 2 created",
+        "timestamp": "2025-01-26 22:11:47.070506",
+        "additional_data": {
+            "message": "This is a test request"
+        }
+    }
+]
