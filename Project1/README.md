@@ -3,6 +3,7 @@ After learning basics I have created this project to implement my knowledge.
 
 # Tools and Technologies
 - Python
+- Poetry
 - FastAPI
 - Pydantic
 - SQLAlchemy
