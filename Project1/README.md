@@ -33,3 +33,17 @@ After learning basics I have created this project to implement my knowledge.
 - **Delete**: Delete user.
 - **Others**: TODO
 
+# How to run the project
+- **Step 1**: Clone the repository.
+- **Step 2**: Install docker and docker-compose.
+- **Step 3**: Run the following command to start the application.
+- **Step 4**: 
+```bash
+cd Project1
+docker-compose up --build
+```
+- **Step 5**: Open the browser and go to `http://localhost/docs` to see the Swagger UI.
+- **Step 6**: Test the API.
+
+# About Run:
+if the docker misbehaves and doesn't closes properly, just run the FDS.bash file to restart docker and then run the docker-compose up --build command.

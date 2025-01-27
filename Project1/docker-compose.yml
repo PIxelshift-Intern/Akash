@@ -10,6 +10,8 @@ services:
       context: .
       dockerfile: Dockerfile.fastapi
     container_name: fastapi_app
+    depends_on:
+      - db
     ports:
       - "8000:8000"  # Expose FastAPI port for internal use (optional for development)
     networks:
@@ -27,6 +29,21 @@ services:
     networks:
       - app_network
 
+  db:
+    image: postgres:13
+    container_name: postgres_db_Project1
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"  # Expose Postgres port for internal use (optional for development)
+    networks:
+      - app_network
+
 networks:
   app_network:
-    driver: bridge
+    driver: bridge    # Use bridge network driver for the app network this is default network driver for docker-compose
+
+    # as for why we need network, it is because we need to connect the fastapi and nginx containers together also 
+    # we need to connect the fastapi container to the database container.

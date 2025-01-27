@@ -1,11 +1,85 @@
-# SSH
-github
+# SSH and Security
+*.pem
 *.pub
+id_rsa*
+.ssh/
+github
 
-# IDEs and editors
-.vscode/
-*/__pycache__/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+.eggs/
 *.pyc
+.pytest_cache/
 
-*/.venv/
+# Virtual Environments
+.env
+.venv/
+env/
+venv/
+ENV/
+.env.local
+.env.*.local
+
+# IDE - VSCode
+.vscode/
+*.code-workspace
+.history/
+
+# IDE - JetBrains
+.idea/
+*.iml
+*.iws
+.idea_modules/
+
+# IDE - Eclipse
+.project
+.classpath
+.settings/
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+log/
+logs/
+
+# Testing
+.coverage
+htmlcov/
+.tox/
+.nox/
+tests/
+.hypothesis/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.directory
+
+# Build and Distribution
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Dependencies
 *.lock
+node_modules/
+package-lock.json
+yarn.lock
+
+# Temporary files
+*.swp
+*.swo
+*~
