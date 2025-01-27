@@ -1,0 +1,32 @@
+# version "1.0"
+# this is the overall docker-compose file which will be used to run the entire project
+# this is to contanerize the entire project
+
+# version: '3.8'
+
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"  # Expose FastAPI port for internal use (optional for development)
+    networks:
+      - app_network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: nginx_proxy
+    ports:
+      - "80:80"  # Expose Nginx port for external use
+    depends_on:
+      - fastapi
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

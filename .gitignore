@@ -6,3 +6,6 @@ github
 .vscode/
 */__pycache__/
 *.pyc
+
+*/.venv/
+*.lock
