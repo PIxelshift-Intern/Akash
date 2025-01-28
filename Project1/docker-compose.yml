@@ -10,6 +10,8 @@ services:
       context: .
       dockerfile: Dockerfile.fastapi
     container_name: fastapi_app
+    env_file:
+      - .env
     depends_on:
       - db
     ports:
@@ -32,6 +34,8 @@ services:
   db:
     image: postgres:13
     container_name: postgres_db_Project1
+    env_file:
+      - .env
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
