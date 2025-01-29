@@ -10,6 +10,8 @@ services:
       context: .
       dockerfile: Dockerfile.fastapi
     container_name: fastapi_app
+    environment:
+      DB_HOST: db  # Use service name inside Docker
     env_file:
       - .env
     depends_on:
