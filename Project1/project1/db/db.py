@@ -17,26 +17,26 @@ engine = create_engine(
     pool_recycle=1800,
 )
 
-def Transactions():
-    """
-    A decorator to handle database transactions. 
-    - Starts a transaction automatically.
-    - Commits on success, rolls back on error.
-    - Passes the active connection to the decorated function.
-    """
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            # Use a context manager to handle the connection and transaction
-            with engine.begin() as conn:
-                # Inject the connection into the decorated function's kwargs
-                kwargs['connection'] = conn
-                # Execute the function within the transaction
-                result = func(*args, **kwargs)
-                # Transaction auto-commits if no exceptions, otherwise rolls back
-                return result
-            # Connection is automatically closed and returned to the pool
-        return wrapper
-    return decorator
+# def Transactions():
+#     """
+#     A decorator to handle database transactions. 
+#     - Starts a transaction automatically.
+#     - Commits on success, rolls back on error.
+#     - Passes the active connection to the decorated function.
+#     """
+#     def decorator(func):
+#         def wrapper(*args, **kwargs):
+#             # Use a context manager to handle the connection and transaction
+#             with engine.begin() as conn:
+#                 # Inject the connection into the decorated function's kwargs
+#                 kwargs['connection'] = conn
+#                 # Execute the function within the transaction
+#                 result = func(*args, **kwargs)
+#                 # Transaction auto-commits if no exceptions, otherwise rolls back
+#                 return result
+#             # Connection is automatically closed and returned to the pool
+#         return wrapper
+#     return decorator
 
 from sqlalchemy import text
 
@@ -68,3 +68,35 @@ def get_data(table_name, columns='*', where_clause=None, params=None):
     with engine.connect() as conn:
         result = conn.execute(text(query), params or {})
         return result.fetchall()
+    
+def update_data(table_name, set_values, where_clause=None, params=None):
+    """
+    Update data in the specified table with given values and conditions.
+
+    Args:
+        table_name (str): Name of the table to update.
+        set_values (dict): Dictionary of column-value pairs to update.
+        where_clause (str, optional): WHERE conditions (exclude 'WHERE'). Defaults to None.
+        params (dict, optional): Parameters for the query. Defaults to None.
+
+    Returns:
+        int: Number of rows affected by the update.
+    """
+    # Build SET clause from dictionary
+    set_clause = ", ".join([f"{key} = :{key}" for key in set_values.keys()])
+    
+    # Build base query
+    query = f"UPDATE {table_name} SET {set_clause}"
+    
+    # Add WHERE clause if specified
+    if where_clause:
+        query += f" WHERE {where_clause}"
+    
+    # Combine set_values with additional params
+    all_params = {**set_values, **(params or {})}
+    
+    # Execute query with parameters
+    with engine.connect() as conn:
+        result = conn.execute(text(query), all_params)
+        conn.commit()
+        return result.rowcount
