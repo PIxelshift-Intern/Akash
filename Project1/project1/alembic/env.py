@@ -14,6 +14,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
@@ -21,12 +22,29 @@ if config.config_file_name is not None:
 from db.schema import metadata
 target_metadata = metadata
 
+from dotenv import load_dotenv
+import os 
+import sys
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '../.env')
+load_dotenv(dotenv_path=dotenv_path)
+
+def get_url():
+    user = os.getenv("POSTGRES_USER")
+    password = os.getenv("POSTGRES_PASSWORD")
+    host = os.getenv("DB_HOST", "postgres_db_Project1")
+    db = os.getenv("POSTGRES_DB")
+
+    print(f"postgresql://{user}:{password}@{host}:5432/{db}",  file=sys.stdout, flush=True)
+    if not all([user, password, db]):
+        raise EnvironmentError("Database connection requires POSTGRES_USER, POSTGRES_PASSWORD, and POSTGRES_DB environment variables")
+    
+    return f"postgresql://{user}:{password}@{host}:5432/{db}"
+
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
-
-
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -40,7 +58,8 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.set_main_option("sqlalchemy.url", get_url())
+    url = get_url()  # Get the URL first
+    config.set_main_option("sqlalchemy.url", url)  # Set it in config
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -51,16 +70,18 @@ def run_migrations_offline() -> None:
     with context.begin_transaction():
         context.run_migrations()
 
-
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
 
     In this scenario we need to create an Engine
     and associate a connection with the context.
-
     """
+    # Get configuration and set URL
+    configuration = config.get_section(config.config_ini_section, {})
+    configuration["sqlalchemy.url"] = get_url()
+
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
+        configuration,
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
@@ -72,14 +93,6 @@ def run_migrations_online() -> None:
 
         with context.begin_transaction():
             context.run_migrations()
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-def get_url():
-    return f"postgresql://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@db:5432/{os.getenv('POSTGRES_DB')}"
-
 
 if context.is_offline_mode():
     run_migrations_offline()
