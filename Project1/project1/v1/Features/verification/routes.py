@@ -43,16 +43,28 @@ async def verify_email_link(token: str):
         # Check if user exists and is unverified
         user = get_data(
             table_name="users",
-            where_clause="email = :email AND is_verified = false",
+            where_clause="email = :email",
             params={"email": email}
         )
 
         if not user:
             raise HTTPException(
                 status_code=404,
-                detail="Invalid verification link or email already verified"
+                detail="Invalid verification link"
             )
 
+        verified = get_data(
+            table_name="users",
+            columns="is_verified",
+            where_clause="email = :email",
+            params={"email": email}
+        )
+
+        if verified[0][0]:
+            raise HTTPException(
+                status_code=400,
+                detail="Email is already verified"
+            )
         # Update user's verification status
         updated = update_data(
             table_name="users",
@@ -90,7 +102,10 @@ async def verify_email_link(token: str):
         print(f"Error in verify_email_link: {str(e)}")
         raise HTTPException(
             status_code=500,
-            detail="Failed to verify email"
+            detail={
+                "message": "Failed to verify email",
+                "error": str(e)
+            }
         )
     
 @router.get("/verified/{email}")

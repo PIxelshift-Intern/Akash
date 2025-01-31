@@ -100,3 +100,29 @@ def update_data(table_name, set_values, where_clause=None, params=None):
         result = conn.execute(text(query), all_params)
         conn.commit()
         return result.rowcount
+    
+def insert_data(table_name, values):
+    """
+    Insert data into the specified table.
+
+    Args:
+        table_name (str): Name of the table to insert into.
+        values (dict): Dictionary of column-value pairs to insert.
+
+    Returns:
+        int: Number of rows inserted (typically 1).
+    """
+    # Extract column names and parameter placeholders
+    columns = list(values.keys())
+    placeholders = [f":{col}" for col in columns]
+    
+    # Build the INSERT query
+    columns_str = ", ".join(columns)
+    values_str = ", ".join(placeholders)
+    query = f"INSERT INTO {table_name} ({columns_str}) VALUES ({values_str})"
+    
+    # Execute query with parameters
+    with engine.connect() as conn:
+        result = conn.execute(text(query), values)
+        conn.commit()
+        return result.rowcount

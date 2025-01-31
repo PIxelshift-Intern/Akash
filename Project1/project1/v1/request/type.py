@@ -17,7 +17,7 @@ class Register(BaseModel):
     """
     username: str
     password: str
-    email: str
+    email: EmailStr
     def __str__(self):
         return self.username
     
@@ -26,7 +26,7 @@ class User(BaseModel):
     This class is used to validate the user object
     """
     username: str
-    email: str
+    email: EmailStr
     created_at: str
     updated_at: str
     Verified: bool

@@ -5,7 +5,7 @@ import os
 from datetime import datetime, timedelta
 from jose import jwt
 from email_validator import validate_email, EmailNotValidError
-from project1.db.db import get_data, update_data
+from project1.db.db import get_data, update_data, insert_data
 
 async def create_redirect_link(email: str) -> str:
     """Create a verification link with JWT token."""
@@ -55,7 +55,6 @@ async def handle_verification(email: str) -> JSONResponse:
                 content="Email is already verified",
                 status_code=400
             )
-
         # Create verification link with token
         redirect_link = await create_redirect_link(email)
 
